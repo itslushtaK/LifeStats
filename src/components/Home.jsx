@@ -115,8 +115,8 @@ const LifeStatsPage = () => {
           <p className="text-gray-500">
             Zbuloni statistikat tuaja të jetës dhe si ka ndryshuar bota me ju
           </p>
-          <h4 className="text-gray-500">
-Shkruaj ditëlindjen tuaj          </h4>
+          <p>
+Shkruani ditëlindjen tuaj          </p>
         </div>
 
         {/* Birth Date Input Section */}
