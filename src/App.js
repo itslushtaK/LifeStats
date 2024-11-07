@@ -1,20 +1,13 @@
+// src/App.js
 import React from "react";
-import "./App.css"; // Ensure you have your custom styles here
+import "./App.css"; // Ensure your custom styles are here
+import Home from "./components/Home"; // Import the Home component
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>Welcome to LifeStats</h1>
-        <p>Your life stats and world data.</p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <Home /> {/* Render the Home component */}
       </header>
     </div>
   );
