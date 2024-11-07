@@ -31,8 +31,8 @@ const LifeStatsPage = () => {
       daysLived: Math.floor(days),
       heartbeats: Math.floor(days * 24 * 60 * 80),
       hoursSlept: Math.floor(days * 8),
-      bloodProduced: Math.floor(days * 5 * 1000), // 5 liters/day in milliliters
-      blinks: Math.floor(days * 24 * 60 * 60 * 15), // Average of 15 blinks per minute
+      bloodProduced: Math.floor(days * 5 * 1000),
+      blinks: Math.floor(days * 24 * 60 * 60 * 15),
       stepsTaken: Math.floor(days * 7000),
       breathsTaken: Math.floor(days * 24 * 60 * 16),
       mealsEaten: Math.floor(days * 3),
@@ -106,7 +106,7 @@ const LifeStatsPage = () => {
   ];
 
   return (
-    <div className="flex flex-col items-center justify-between min-h-screen bg-white p-4">
+    <div className="flex flex-col items-center justify-between min-h-screen bg-white p-0 pt-10">
       <div className="w-full max-w-3xl">
         <div className="mb-8 text-center">
           <h1 className="text-4xl font-bold text-gray-700 mb-2">
@@ -118,8 +118,9 @@ const LifeStatsPage = () => {
         </div>
 
         {/* Birth Date Input Section */}
-        <div className="mb-8 flex flex-col md:flex-row justify-between space-x-4 space-y-4 md:space-y-0">
-          <div className="w-full md:w-1/3">
+        {/* Birth Date Input Section */}
+        <div className="mb-8 flex flex-row justify-between space-x-4">
+          <div className="w-full">
             <label className="block text-sm font-medium text-gray-600 mb-2">
               Dita:
             </label>
@@ -134,7 +135,7 @@ const LifeStatsPage = () => {
             />
           </div>
 
-          <div className="w-full md:w-1/3">
+          <div className="w-full">
             <label className="block text-sm font-medium text-gray-600 mb-2">
               Muaji:
             </label>
@@ -149,7 +150,7 @@ const LifeStatsPage = () => {
             />
           </div>
 
-          <div className="w-full md:w-1/3">
+          <div className="w-full">
             <label className="block text-sm font-medium text-gray-600 mb-2">
               Viti:
             </label>
