@@ -4,9 +4,7 @@ import {
   HeartIcon,
   EyeIcon,
   SunIcon,
-  CloudIcon,
   BeakerIcon,
-  FingerPrintIcon,
   MoonIcon,
   CloudDownloadIcon,
   UserGroupIcon,
@@ -16,6 +14,7 @@ import Footer from "./Footer";
 const LifeStatsPage = () => {
   const [birthDate, setBirthDate] = useState({ day: "", month: "", year: "" });
   const [stats, setStats] = useState(null);
+  const [loading, setLoading] = useState(false); // Preloader state
 
   const calculateStats = () => {
     const { day, month, year } = birthDate;
@@ -26,8 +25,10 @@ const LifeStatsPage = () => {
     const milliseconds = now - birth;
     const days = milliseconds / (1000 * 60 * 60 * 24);
     const years = days / 365.25;
+    const seconds = milliseconds / 1000;
 
     const personalStats = {
+      secondsLived: Math.floor(seconds),
       daysLived: Math.floor(days),
       heartbeats: Math.floor(days * 24 * 60 * 80),
       hoursSlept: Math.floor(days * 8),
@@ -51,7 +52,13 @@ const LifeStatsPage = () => {
   };
 
   useEffect(() => {
-    setStats(calculateStats());
+    if (birthDate.day && birthDate.month && birthDate.year) {
+      setLoading(true);
+      setTimeout(() => {
+        setStats(calculateStats());
+        setLoading(false); // Hide preloader when stats are ready
+      }, 1000); // Simulate loading delay
+    }
   }, [birthDate]);
 
   const statItems = [
@@ -72,6 +79,12 @@ const LifeStatsPage = () => {
       label: "Gjak i prodhuar",
       value: `${stats?.personalStats.bloodProduced.toLocaleString()} ml`,
       iconColor: "text-pink-500",
+    },
+    {
+      icon: SunIcon,
+      label: "Sekondat e jetuara",
+      value: `${stats?.personalStats.secondsLived.toLocaleString()} sekonda`,
+      iconColor: "text-indigo-500",
     },
     {
       icon: SunIcon,
@@ -107,8 +120,17 @@ const LifeStatsPage = () => {
 
   return (
     <div className="flex flex-col items-center justify-between min-h-screen bg-white p-0 pt-10">
+      {loading && (
+        <div className="fixed inset-0 flex items-center justify-center bg-white bg-opacity-75 z-50">
+          <div className="animate-spin w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full"></div>
+        </div>
+      )}
+
       <div className="w-full max-w-3xl">
         <div className="mb-8 text-center">
+          <div className="flex justify-center mb-4">
+            <UserIcon className="w-20 h-20 text-gray-500" />
+          </div>
           <h1 className="text-4xl font-bold text-gray-700 mb-2">
             Statistikat e jetës & Botës
           </h1>
@@ -118,15 +140,16 @@ const LifeStatsPage = () => {
         </div>
 
         {/* Birth Date Input Section */}
-        {/* Birth Date Input Section */}
         <div className="mb-8 flex flex-row justify-between space-x-4">
           <div className="w-full">
             <label className="block text-sm font-medium text-gray-600 mb-2">
               Dita:
             </label>
             <input
-              type="number"
-              className="w-full p-3 border rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-400 appearance-none -moz-appearance-none -webkit-appearance-none"
+              type="text"
+              inputMode="numeric"
+              pattern="[0-9]*"
+              className="w-full p-3 border rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-400"
               value={birthDate.day}
               onChange={(e) =>
                 setBirthDate({ ...birthDate, day: e.target.value })
@@ -140,8 +163,10 @@ const LifeStatsPage = () => {
               Muaji:
             </label>
             <input
-              type="number"
-              className="w-full p-3 border rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-400 appearance-none -moz-appearance-none -webkit-appearance-none"
+              type="text"
+              inputMode="numeric"
+              pattern="[0-9]*"
+              className="w-full p-3 border rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-400"
               value={birthDate.month}
               onChange={(e) =>
                 setBirthDate({ ...birthDate, month: e.target.value })
@@ -155,8 +180,10 @@ const LifeStatsPage = () => {
               Viti:
             </label>
             <input
-              type="number"
-              className="w-full p-3 border rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-400 appearance-none -moz-appearance-none -webkit-appearance-none"
+              type="text"
+              inputMode="numeric"
+              pattern="[0-9]*"
+              className="w-full p-3 border rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-400"
               value={birthDate.year}
               onChange={(e) =>
                 setBirthDate({ ...birthDate, year: e.target.value })
@@ -165,13 +192,14 @@ const LifeStatsPage = () => {
           </div>
         </div>
 
-        {/* Stats Display Section */}
-        {stats && (
+        {/* Stats Display Section with Fade-Up Animation */}
+        {!loading && stats && (
           <div className="flex flex-col items-center space-y-6">
             {statItems.map((item, index) => (
               <div
                 key={index}
-                className="w-full bg-gray-100 shadow-lg rounded-lg p-8 flex flex-col items-center space-y-4 border border-gray-200"
+                className="w-full bg-gray-100 shadow-lg rounded-lg p-8 flex flex-col items-center space-y-4 border border-gray-200 animate-fade-up"
+                style={{ animationDelay: `${index * 0.1}s` }}
               >
                 <item.icon
                   className={`h-12 w-12 animate-pulse ${item.iconColor}`}
